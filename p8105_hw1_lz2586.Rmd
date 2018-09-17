@@ -18,17 +18,52 @@ df = tibble(
   vec_char = c('a','b','c','d','e','f','g','h','i','j'),
   vec_factor = factor(c('a','b','c','d','e','f','g','h','i','j'))
   )
+mean(df$r_samp)
+mean(df$vec_logical)
+mean(df$vec_char)
+mean(df$vec_factor)
+```
 
+I created the data frame called "df" as asked. I am able to take the mean of the variable "r_samp" and "vec_logical" but not "vec_char" and "vec_factor". The reason is that R is only able to take the mean for numeric and logical variables.  
+
+```{r problem_1_convert, eval = FALSE}
+df$logical_num <- as.numeric(df$vec_logical)
+df$char_num <- as.numeric(df$vec_char)
+df$factor_num <- as.numeric(df$vec_factor)
+
+## The logical to numeric and factor to numeric convert work, but the character to numeric convert doesn't work.
+
+df$char_factor <- as.factor(df$vec_char)
+df$c_f_num <- as.numeric(df$char_factor)
+df$factor_char <- as.character(df$vec_factor)
+df$f_c_num <- as.numeric(df$factor_char)
+
+## The character to factor convert allows character varaibles to be converted to numeric variables. Factor variables can be converted to numeric variables, but character variables cannot be converted to numeric variables. 
 
 ```
 
 
-```{r cars}
-summary(cars)
+```{r problem_2}
+df2 <- tibble(
+  x = rnorm(1000),
+  y = rnorm(1000),
+  vec_logical = x+y>0,
+  vec_num = as.numeric(vec_logical),
+  vec_factor = as.factor(vec_logical)
+)
 ```
 
+The size of the data frame is `r dim(df2)`.
+The mean of variable x is `r mean(df2$x)`.
+The median of variable x is `r median(df2$x)`.
+The proportion of cases for which the logical vector is TRUE is `r mean(vec_num)`.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r problem_2_cont}
+ggplot(df2)+geom_point(aes(x = x, y = y, color = vec_logical))
+
+
+
+
+
 ```
 
