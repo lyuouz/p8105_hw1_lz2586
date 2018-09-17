@@ -1,15 +1,18 @@
 ---
 title: "P8105_hw1_lz586"
-author: "Lyuou Zhang"
-date: "9/16/2018"
-output: github_document
+author: "Lyuou Zhang"  
+date: "9/16/2018"  
+output: 
+  github_document:
     toc: true
-    toc_float: true
 ---
 
 ```{r load, include = FALSE}
 library(tidyverse)
+library(rmarkdown)
 ```
+
+## Problem 1
 
 ```{r problem_1}
 df = tibble(
@@ -26,7 +29,7 @@ mean(df$vec_factor)
 
 I created the data frame called "df" as asked. I am able to take the mean of the variable "r_samp" and "vec_logical" but not "vec_char" and "vec_factor". The reason is that R is only able to take the mean for numeric and logical variables.  
 
-```{r problem_1_convert, eval = FALSE}
+```{r problem_1_convert, include = FALSE}
 df$logical_num <- as.numeric(df$vec_logical)
 df$char_num <- as.numeric(df$vec_char)
 df$factor_num <- as.numeric(df$vec_factor)
@@ -42,28 +45,30 @@ df$f_c_num <- as.numeric(df$factor_char)
 
 ```
 
+## Problem 2
 
 ```{r problem_2}
 df2 <- tibble(
   x = rnorm(1000),
   y = rnorm(1000),
-  vec_logical = x+y>0,
+  vec_logical = x + y > 0,
   vec_num = as.numeric(vec_logical),
   vec_factor = as.factor(vec_logical)
 )
 ```
 
-The size of the data frame is `r dim(df2)`.
-The mean of variable x is `r mean(df2$x)`.
-The median of variable x is `r median(df2$x)`.
-The proportion of cases for which the logical vector is TRUE is `r mean(vec_num)`.
+The size of the data frame is `r dim(df2)`.  
+The mean of variable x is `r mean(df2$x)`.  
+The median of variable x is `r median(df2$x)`.  
+The proportion of cases for which the logical vector is TRUE is `r mean(df2$vec_num)`.  
 
-```{r problem_2_cont}
-ggplot(df2)+geom_point(aes(x = x, y = y, color = vec_logical))
-
-
-
-
-
+```{r problem_2_cont, echo = FALSE}
+p1 <- ggplot(df2)+geom_point(aes(x = x, y = y, color = vec_logical))
+p1
+ggsave('plot1.jpg', p1)
+p2 <- ggplot(df2)+geom_point(aes(x = x, y = y, color = vec_num))
+p2
+p3 <- ggplot(df2)+geom_point(aes(x = x, y = y, color = vec_factor))
+p3
 ```
 
